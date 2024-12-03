@@ -34,6 +34,8 @@ from prometheus_client import Summary, start_http_server
 
 
 from ...models.documentreport import DocumentReport
+from ...models.offendingdocument import OffendingDocument
+from ...models.person import Person
 from ...utils import prepare_json_object
 from ....organizations.models import AccountOutlookSetting
 from ...views.utilities.msgraph_utilities import outlook_settings_from_owner
@@ -315,9 +317,31 @@ def handle_match_message(scan_tag, result):  # noqa: CCR001, E501 too high cogni
 
                     "raw_problem": None,
                 })
+        od, _ = OffendingDocument.objects.update_or_create(
+                handle=prepare_json_object(new_matches.handle.presentation_name),  
+                defaults={ "handle": prepare_json_object(new_matches.handle.presentation_name),}
+        )
+        
+        
+        for match in matches:
+            print(match)
+            if match[0] == 'CPR regel':
+                for match in match[1]:
+                    print( match['match'])
+            
+                    p, _ = Person.objects.update_or_create(
+                    
+                        cpr=prepare_json_object(match['match']),  
+                        defaults={ "cpr": prepare_json_object(match['match']),}
+                    )
+                    if not od.persons.filter(cpr=p.cpr).exists():
+
+                        od.persons.add(p)
+
+
 
         logger.debug("matches, saved DocReport", report=dr)
-        return dr
+        return dr, od, p
     else:
         logger.debug("No new matches.")
         return None

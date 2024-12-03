@@ -42,6 +42,7 @@ class Printer(PikaPipelineThread):
                     "information: message format recognised, printing censored"
                     " content", file=sys.stderr)
             print(censor_outgoing_message(message).to_json_object())
+            
 
         # Enqueueing a stop command before handle_message returns ensures that
         # we'll disconnect before we acknowledge recept of this message

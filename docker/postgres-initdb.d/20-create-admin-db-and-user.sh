@@ -13,6 +13,7 @@
 # using the POSTGRES_* env variables as this user is not a SUPERUSER. A
 # SUPERUSER can be used as privilege escalation to the postgres service system
 # user in the event of SQL injection.
+echo "admin test"
 
 if [ -n "$ADMIN_DATABASE_USER" ];
 then
@@ -30,3 +31,6 @@ GRANT ALL PRIVILEGES ON DATABASE ${ADMIN_DATABASE_NAME} TO ${ADMIN_DATABASE_USER
 GRANT CREATE ON SCHEMA public TO ${ADMIN_DATABASE_USER};
 ENDSQL
 fi
+
+echo "${ADMIN_DATABASE_USER}"
+echo "${ADMIN_DATABASE_PASSWORD}"

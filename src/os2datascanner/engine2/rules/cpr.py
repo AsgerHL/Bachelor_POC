@@ -138,7 +138,7 @@ class CPRRule(RegexRule):
                     logger.debug(f"{cpr} is not valid cpr due to {probability}")
                     return False
 
-            cpr = cpr[0:4] + "XXXXXX"
+            #cpr = cpr[0:4] + "XXXXXX"
             low, high = match.span()
             # only examine context if there is any
             if self._examine_context and len(content) > (high - low):
@@ -176,7 +176,7 @@ class CPRRule(RegexRule):
 
         for m in cpr_numbers:
             cpr = match_to_cpr(m)
-            cpr = cpr[0:4] + "XXXXXX"
+            #cpr = cpr[0:4] + "XXXXXX"
 
             yield {
                 "match": cpr,
