@@ -23,13 +23,17 @@ class OffendingDocument(models.Model):
         editable=False,
         verbose_name=_('handle')
     )
+
+    source_age = models.DateTimeField(null=True)
     
 class OffendingDocumentSerializer(serializers.ModelSerializer):
     class Meta:
         fields = [
             'uuid',
             'persons',
-            'handle'
+            'handle',
+            'source_age'
+
             ]
 
     
