@@ -8,7 +8,7 @@ class Person(models.Model):
     cpr = models.CharField(
         primary_key=True,
         editable=False,
-        max_length=12,
+        max_length=10,
         verbose_name=_('cpr'),
     )
     
