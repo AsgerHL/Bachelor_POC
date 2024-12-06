@@ -172,6 +172,7 @@ def handle_metadata_message(scan_tag, result):
             logger.debug(f"Enqueued categorize email request containing body: {message_body}")
         else:
             logger.debug(f"Categorizing mail not enabled for {owner}")
+
     if dr:
         create_aliases(dr)
     else: 
@@ -346,7 +347,7 @@ def handle_match_message(scan_tag, result):  # noqa: CCR001, E501 too high cogni
 
 
         logger.debug("matches, saved DocReport", report=dr)
-        return dr, od, p
+        return dr, od
     else:
         logger.debug("No new matches.")
         return None

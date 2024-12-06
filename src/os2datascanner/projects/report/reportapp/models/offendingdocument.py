@@ -33,7 +33,6 @@ class OffendingDocumentSerializer(serializers.ModelSerializer):
             'persons',
             'handle',
             'source_age'
-
             ]
 
     
