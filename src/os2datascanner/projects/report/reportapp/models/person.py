@@ -11,8 +11,6 @@ class Person(models.Model):
         max_length=10,
         verbose_name=_('cpr'),
     )
-    
-    
 
 class PersonSerializer(serializers.ModelSerializer):
     class Meta:
