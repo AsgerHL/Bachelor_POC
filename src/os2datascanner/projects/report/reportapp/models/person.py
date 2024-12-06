@@ -11,19 +11,12 @@ class Person(models.Model):
         max_length=12,
         verbose_name=_('cpr'),
     )
-
-    # documents = models.ManyToManyField(
-    #     'OffendingDocument',
-    #     related_name='persons',
-    #     verbose_name=_('documents')
-    # )
     
 
 class PersonSerializer(serializers.ModelSerializer):
     class Meta:
         fields = [
             'cpr',
-            'documents'
             ]
    
 
