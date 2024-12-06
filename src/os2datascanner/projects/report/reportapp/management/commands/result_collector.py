@@ -159,6 +159,11 @@ def handle_metadata_message(scan_tag, result):
                 "owner": owner,
             })
 
+    od, _ = OffendingDocument.objects.update_or_create(
+                handle=prepare_json_object(message.handle.presentation_name),  
+                defaults={ "source_age": lm,}
+        )
+
     # We've encountered an Outlook match that isn't categorized False Positive.
     if dr.source_type == MSGraphMailSource.type_label and not outlook_false_positive:
         if (settings := outlook_settings_from_owner(owner)) and outlook_categorize_enabled(owner):
@@ -168,7 +173,10 @@ def handle_metadata_message(scan_tag, result):
         else:
             logger.debug(f"Categorizing mail not enabled for {owner}")
 
-    create_aliases(dr)
+    if dr:
+        create_aliases(dr)
+    else: 
+        return od
 
 
 def create_aliases(dr: DocumentReport):
@@ -324,10 +332,8 @@ def handle_match_message(scan_tag, result):  # noqa: CCR001, E501 too high cogni
         
         
         for match in matches:
-            print(match)
             if match[0] == 'CPR regel':
                 for match in match[1]:
-                    print( match['match'])
             
                     p, _ = Person.objects.update_or_create(
                     
@@ -341,7 +347,7 @@ def handle_match_message(scan_tag, result):  # noqa: CCR001, E501 too high cogni
 
 
         logger.debug("matches, saved DocReport", report=dr)
-        return dr, od, p
+        return dr, od
     else:
         logger.debug("No new matches.")
         return None
