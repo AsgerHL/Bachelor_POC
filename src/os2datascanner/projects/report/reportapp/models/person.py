@@ -12,11 +12,12 @@ class Person(models.Model):
         verbose_name=_('cpr'),
     )
     
+    
 
 class PersonSerializer(serializers.ModelSerializer):
     class Meta:
         fields = [
-            'cpr',
+            'cpr'
             ]
    
 
